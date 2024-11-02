@@ -81,12 +81,13 @@ find ./usr/lib ./usr/bin -type f -exec strip -s -R .comment --strip-unneeded {} 
 # Do the thing!
 echo "Generating AppImage..."
 export VERSION="$(./AppRun --version | awk '{print $(NF-1)}')"
+echo "version is $VERSION"
 cd ..
 wget -q "$APPIMAGETOOL" -O appimagetool
 chmod +x ./appimagetool
 ls
 ./appimagetool --comp zstd \
 	--mksquashfs-opt -Xcompression-level --mksquashfs-opt 22 \
-	-n "$PWD"/AppDir "$PWD"/dunst-"$VERSION"-"$ARCH".AppImage
+	-n ./AppDir ./dunst-"$VERSION"-"$ARCH".AppImage
 ls
 echo "All Done!"
